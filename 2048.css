@@ -115,6 +115,17 @@ h1 {
     color: white;
 }
 
+#restart {
+    width: 100px;
+    height: 40px;
+display: inline-block;
+background-color:blanchedalmond;
+border-color: #bbada0;
+font: 100;
+font-family: 'Courier New', Courier, monospace;
+position:relative;
+bottom: 10px;
+}
 
 /* #score {
 
