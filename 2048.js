@@ -7,8 +7,8 @@ let board = [
 
 function addTile() {
     //Picks a random position on the board that has no value
-    let randX;
-    let randY;
+    randX = Math.floor(4 * Math.random());
+    randY = Math.floor(4 * Math.random());
     while (board[randY][randX] != 0) {
         randX = Math.floor(4 * Math.random());
         randY = Math.floor(4 * Math.random());
