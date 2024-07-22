@@ -21,7 +21,7 @@ function initialize() {
     addTile();
     addTile();
 }
-
+initialize();
 function slide(dx,dy) {
     
 }
