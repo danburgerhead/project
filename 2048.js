@@ -30,7 +30,7 @@ function initialize() {
     for(let arrayY of [0,1,2,3]) {
         board.push([]);
         for (let arrayX of [0,1,2,3]) {
-            let newTile = new Tile(arrayX, arrayY, 0, document.createElement("div"));
+            let newTile = new Tile(arrayX, arrayY, "", document.createElement("div"));
             newTile.htmlElement.className = "tile";
             board[arrayY].push(newTile);
             document.getElementById("board").appendChild(newTile.htmlElement);
