@@ -20,6 +20,11 @@ function addTile() {
 function initialize() {
     addTile();
     addTile();
+    for(let i = 0; i < 16; i++) {
+        let newTile = document.createElement("div");
+        newTile.className = "tile";
+        document.getElementById("board").appendChild(newTile);
+    }
 }
 initialize();
 function slide(dx,dy) {
