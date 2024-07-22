@@ -44,7 +44,6 @@ function initialize() {
 initialize();
 
 function runAnimation() {
-    
 }
 
 function slide(slideDirection) {
@@ -66,3 +65,5 @@ function keyPress(event) {
     }
 }
 document.addEventListener("keyup",keyPress,false);
+
+
