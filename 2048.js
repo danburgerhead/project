@@ -56,8 +56,8 @@ function keyPress(event) {
     let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,1],[0,-1]]];
     if (keyArray[0].includes(event.key)) {
         slide(keyArray[1][keyArray[0].indexOf(event.key)]);
+        //checkDeath();
         addTile();
-        checkDeath();
     }
 }
 document.addEventListener("keyup",keyPress,false);
