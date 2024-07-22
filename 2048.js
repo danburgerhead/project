@@ -40,13 +40,16 @@ function initialize() {
     addTile();
 }
 initialize();
+
+function slide(slideDirection) {
+    
+}
+
 function keyPress(event) {
     //Maps input. Right -> [1,0], Left -> [-1,0], Up -> [0,1], Down -> [0,-1]
     let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,1],[0,-1]]];
     if (keyArray[0].includes(event.key)) {
-        console.log(keyArray[1][keyArray[0].indexOf(event.key)]);
+        //  keyArray[1][keyArray[0].indexOf(event.key)]
     }
 }
-
-
 document.addEventListener("keyup",keyPress,false);
