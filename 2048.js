@@ -5,11 +5,13 @@ class Tile {
         this.y = y;
         this.value = value;
         this.htmlElement = htmlElement;
+        this.canMerge = false;
     }
     changeValue(newValue) {
         this.value = newValue;
         this.htmlElement.className = "tile x" + this.value;
         this.htmlElement.textContent = this.value;
+        this.canMerge = false;
     }
 }
 
@@ -49,6 +51,9 @@ function slide(slideDirection) {
     let dx = slideDirection[0];
     let dy = slideDirection[1];
     runAnimation();
+    for (let tile in board.flat) {
+        tile.canMerge = true;
+    }
 }
 
 function keyPress(event) {
