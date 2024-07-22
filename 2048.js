@@ -5,7 +5,6 @@ let board = [
     [0,0,0,0]
 ];
 
-
 function addTile() {
     //Picks a random position on the board that has no value
     let randX;
