@@ -6,6 +6,10 @@ class Tile {
         this.value = value;
         this.htmlElement = htmlElement;
     }
+    changeValue(newValue) {
+        this.value = newValue;
+        this.htmlElement.className = "Tile x" + this.value;
+    }
 }
 
 function addTile() {
@@ -17,8 +21,7 @@ function addTile() {
         randY = Math.floor(4 * Math.random());
     }
     //Replaces position with 2 (90% chance) or 4 (10% chance)
-    board[randY][randX].value = [2,2,2,2,2,2,2,2,2,4][Math.floor(10 * Math.random())];
-    board[randY][randX].htmlElement.className += " x" + board[randY][randX].value;
+    board[randY][randX].changeValue([2,2,2,2,2,2,2,2,2,4][Math.floor(10 * Math.random())]);
 }
 
 let board = [];
