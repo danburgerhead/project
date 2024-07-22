@@ -8,7 +8,7 @@ class Tile {
     }
     changeValue(newValue) {
         this.value = newValue;
-        this.htmlElement.className = "Tile x" + this.value;
+        this.htmlElement.className = "tile x" + this.value;
     }
 }
 
