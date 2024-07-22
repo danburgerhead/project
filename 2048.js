@@ -19,7 +19,7 @@ function addTile() {
     //Picks a random position on the board that has no value
     randX = Math.floor(4 * Math.random());
     randY = Math.floor(4 * Math.random());
-    while (board[randY][randX].value != 0) {
+    while (board[randY][randX].value != "") {
         randX = Math.floor(4 * Math.random());
         randY = Math.floor(4 * Math.random());
     }
@@ -49,15 +49,27 @@ function runAnimation() {
 function slide(slideDirection) {
     let dx = slideDirection[0];
     let dy = slideDirection[1];
+    let xOrder = [[0,1,2,3],[3,2,1,0]][Number(dx == 1)];
+    let yOrder = [[0,1,2,3],[3,2,1,0]][Number(dy == 1)];
     runAnimation();
-    for (let tile in board.flat) {
+    for (let tile of board.flat()) {
         tile.canMerge = true;
+    }
+    for (let yI of yOrder) {
+        for (let xI of xOrder) {
+            if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) {
+                if (board[yI+dy][xI+dx].value == board[yI][xI].value && board[yI][xI].value != "") {
+                    board[yI+dy][xI+dx].changeValue(board[yI+dy][xI+dx].value + board[yI][xI].value);
+                    board[yI][xI].changeValue("");
+                }
+            }
+        }
     }
 }
 
 function keyPress(event) {
     //Maps input. Right -> [1,0], Left -> [-1,0], Up -> [0,1], Down -> [0,-1]
-    let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,1],[0,-1]]];
+    let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,-1],[0,1]]];
     if (keyArray[0].includes(event.key)) {
         slide(keyArray[1][keyArray[0].indexOf(event.key)]);
         //checkDeath();
