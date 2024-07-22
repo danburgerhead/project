@@ -16,6 +16,12 @@ function addTile() {
     //Replaces position with 2 (90% chance) or 4 (10% chance)
     board[randY][randX] = [2,2,2,2,2,2,2,2,2,4][floor(10 * Math.random())];
 }
+
+function initialize() {
+    addTile();
+    addTile();
+}
+
 function slide(dx,dy) {
     
 }
