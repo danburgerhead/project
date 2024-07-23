@@ -110,5 +110,3 @@ function keyPress(event) {
     }
 }
 document.addEventListener("keyup",keyPress,false);
-
-
