@@ -14,7 +14,7 @@ hr {
     height:400px; 
     background-color: #cdc1b5; 
     border:6px solid #bbada0; 
-    border-radius: 6px;
+    border-radius: 1.125vw;
     display:flex; 
     margin: 0 auto; 
     flex-wrap:wrap; 
