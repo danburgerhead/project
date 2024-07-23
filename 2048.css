@@ -7,11 +7,11 @@ body {
 
 #board {
 
-    width:400px;
-    height:400px; 
-    background-color: #cdc1b5; 
-    border:6px solid #bbada0; 
-    border-radius: 6px;
+    width:60vh;
+    height:60vh; 
+    background-color: #bbada0; 
+    border:0.9vh solid #bbada0; 
+    border-radius: 0.9vh;
     display:flex; 
     margin: 0 auto; 
     flex-wrap:wrap; 
@@ -20,8 +20,8 @@ body {
 
 #gameBoard {
     display:grid; 
-    width:100%; 
-    height:100%; 
+    width:100%;
+    height:100%;
     background-color:blanchedalmond;
     border-radius:6px; 
     padding:10px; 
@@ -32,15 +32,16 @@ body {
 
 }
 .tile {
-width: 90px;
-height: 90px;
-border:5px solid #bbada0;
-font-size:40px; 
-font-weight:bold; 
-display:flex; 
-justify-content:center; 
-align-items:center; 
-position: relative;
+    background-color: #cdc1b5; 
+    width: 22.5%;
+    height: 22.5%;
+    border:0.75vh solid #bbada0;
+    font-size:6vh; 
+    font-weight:bold; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    position: relative;
 }
 
 h1 {
