@@ -47,7 +47,6 @@ function runAnimation() {
 }
 
 function slide(slideDirection) {
-    let oldBoard = board;
     let dx = slideDirection[0];
     let dy = slideDirection[1];
     let xOrder = [[0,1,2,3],[3,2,1,0]][Number(dx == 1)];
@@ -75,6 +74,7 @@ function slide(slideDirection) {
         for (let xI of xOrder) {
             if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) { //Checks for edge and avoids error
                 if (board[yI+dy][xI+dx].value == board[yI][xI].value && board[yI][xI].value != "") {
+                    document.getElementById("score").textContent = Number(document.getElementById("score").textContent) + board[yI+dy][xI+dx].value + board[yI][xI].value
                     board[yI+dy][xI+dx].changeValue(board[yI+dy][xI+dx].value + board[yI][xI].value);
                     board[yI][xI].changeValue("");
                     legalMove = true;
