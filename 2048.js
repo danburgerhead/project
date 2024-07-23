@@ -47,33 +47,66 @@ function runAnimation() {
 }
 
 function slide(slideDirection) {
+    let oldBoard = board;
     let dx = slideDirection[0];
     let dy = slideDirection[1];
     let xOrder = [[0,1,2,3],[3,2,1,0]][Number(dx == 1)];
     let yOrder = [[0,1,2,3],[3,2,1,0]][Number(dy == 1)];
+    let legalMove = false;
     runAnimation();
-    for (let tile of board.flat()) {
+    for (let tile of board.flat()) { //Resets state of all tiles
         tile.canMerge = true;
     }
-    for (let yI of yOrder) {
-        for (let xI of xOrder) {
-            if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) {
-                if (board[yI+dy][xI+dx].value == board[yI][xI].value && board[yI][xI].value != "") {
-                    board[yI+dy][xI+dx].changeValue(board[yI+dy][xI+dx].value + board[yI][xI].value);
-                    board[yI][xI].changeValue("");
+    for (let i = 0; i < 3; i++) {
+        for (let yI of yOrder) {
+            for (let xI of xOrder) {
+                let [xO,yO] = [xI,yI];
+                if (xOrder.includes(xO+dx) && yOrder.includes(yO+dy)) { //Checks for edge and avoids error
+                    if (board[yO][xO].value != "" && board[yO+dy][xO+dx].value == "") {
+                        board[yO+dy][xO+dx].changeValue(board[yO][xO].value);
+                        board[yO][xO].changeValue("");
+                        legalMove = true;
+                    }
                 }
             }
         }
     }
+    for (let yI of yOrder) {
+        for (let xI of xOrder) {
+            if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) { //Checks for edge and avoids error
+                if (board[yI+dy][xI+dx].value == board[yI][xI].value && board[yI][xI].value != "") {
+                    board[yI+dy][xI+dx].changeValue(board[yI+dy][xI+dx].value + board[yI][xI].value);
+                    board[yI][xI].changeValue("");
+                    legalMove = true;
+                }
+            }
+        }
+    }
+    for (let i = 0; i < 3; i++) {
+        for (let yI of yOrder) {
+            for (let xI of xOrder) {
+                let [xO,yO] = [xI,yI];
+                if (xOrder.includes(xO+dx) && yOrder.includes(yO+dy)) { //Checks for edge and avoids error
+                    if (board[yO][xO].value != "" && board[yO+dy][xO+dx].value == "") {
+                        board[yO+dy][xO+dx].changeValue(board[yO][xO].value);
+                        board[yO][xO].changeValue("");
+                        legalMove = true;
+                    }
+                }
+            }
+        }
+    }
+    return legalMove;
 }
 
 function keyPress(event) {
     //Maps input. Right -> [1,0], Left -> [-1,0], Up -> [0,1], Down -> [0,-1]
     let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,-1],[0,1]]];
     if (keyArray[0].includes(event.key)) {
-        slide(keyArray[1][keyArray[0].indexOf(event.key)]);
         //checkDeath();
-        addTile();
+        if (slide(keyArray[1][keyArray[0].indexOf(event.key)])) {
+            addTile();
+        }
     }
 }
 document.addEventListener("keyup",keyPress,false);
