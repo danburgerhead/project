@@ -1,4 +1,17 @@
+@font-face {
+    font-family: 'ArcadeClassic'; 
+    src: url('ARCADECLASSIC.TTF') format('truetype'); 
+    font-weight:normal;
+    font-style:normal; 
+}
+
+#text {
+    font-family:'ArcadeClassic'; 
+    font-size:20px; 
+}
+
 body {
+    font-family: 'ArcadeClassic', sans-serif; 
     display: flex;
     justify-content: center;
     align-items: center;
