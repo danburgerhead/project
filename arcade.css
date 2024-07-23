@@ -7,7 +7,34 @@
 
 #text {
     font-family:'ArcadeClassic'; 
-    font-size:20px; 
+    font-size: 6rem;
+    background: linear-gradient(90deg, red, white); /* Gradient from yellow to orange */
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 0px;
+}
+
+#ready {
+    font-family:'ArcadeClassic'; 
+    font-size: 1.5rem;
+    background: linear-gradient(90deg, #ffffff, #ff553b); /* Gradient from white to yellow */
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 0px;
+}
+
+#answer {
+    font-family:'ArcadeClassic'; 
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #333;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #ffffff, #ff553b); /* Gradient from white to yellow */
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: background-color 0.3s;
+
 }
 
 body {
@@ -65,6 +92,20 @@ body {
     position: relative;
 }
 
+.screen-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+
+
 .screen {
     width: 100%;
     height: 100%;
@@ -75,6 +116,12 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-image: url('gif.gif'); 
+    background-repeat:no-repeat; 
+    background-size: 110%; 
+    z-index:1; 
+   
+
 }
 
 .start-screen {
@@ -161,4 +208,5 @@ button:active {
     width: 100%;
     height: 100%;
     position: absolute;
+    z-index:2; 
 }
