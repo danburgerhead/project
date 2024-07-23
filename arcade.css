@@ -1,0 +1,145 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #222;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+}
+
+.arcade-cabinet {
+    width: 500px;
+    height: 800px;
+    background-color: #000;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.arcade-header {
+    width: 100%;
+    height: 60px;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.arcade-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.arcade-screen {
+    width: 90%;
+    height: 60%;
+    background-color: #222;
+    border: 5px solid #777;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.start-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #444;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+button:active {
+    background-color: #666;
+}
+
+.arcade-controls {
+    width: 100%;
+    height: 200px;
+    background-color: #333;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.joystick {
+    width: 50px;
+    height: 50px;
+    background-color: #888;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.control-buttons {
+    display: flex;
+}
+
+.control-btn {
+    width: 40px;
+    height: 40px;
+    background-color: #444;
+    border: none;
+    border-radius: 50%;
+    margin: 0 10px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.control-btn:hover {
+    background-color: #555;
+}
+
+.control-btn:active {
+    background-color: #666;
+}
