@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     yesButton.addEventListener('click', () => {
         alert('Game Starting...');
         // You can replace this alert with code to transition to the game screen
+        let newGame = document.createElement("iframe");
+        newGame.id = "game";
+        newGame.style.border = "0px solid";
+        newGame.src = src="2048.html";
+        document.getElementById("arcade-screen").appendChild(newGame);
     });
 
     noButton.addEventListener('click', () => {

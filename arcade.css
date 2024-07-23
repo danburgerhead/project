@@ -51,7 +51,7 @@ body {
     font-size: 1.5rem;
 }
 
-.arcade-screen {
+#arcade-screen {
     width: 90%;
     height: 60%;
     background-color: #222;
