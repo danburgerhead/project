@@ -99,13 +99,34 @@ function slide(slideDirection) {
     return legalMove;
 }
 
+function checkDeath() {
+    console.log("deathcheck");
+    let alive = false;
+    for (let tile of board.flat().filter(t => (t.x + t.y) % 2 == 0)) {
+        for (let d of [[0,1],[0,-1],[1,0],[-1,0]]) {
+            let [dx,dy] = [d[0],d[1]];
+            console.log([tile.x,tile.y,d]);
+            if ([0,1,2,3].includes(tile.x+dx) && [0,1,2,3].includes(tile.y+dy)) {
+                if(tile.value == board[tile.y+dy][tile.x+dx].value) {
+                    alive = true;
+                    return alive;
+                }
+            }
+        }
+    }
+    console.log("Ded L");
+    return alive;
+}
+
 function keyPress(event) {
     //Maps input. Right -> [1,0], Left -> [-1,0], Up -> [0,1], Down -> [0,-1]
     let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,-1],[0,1]]];
     if (keyArray[0].includes(event.key)) {
-        //checkDeath();
         if (slide(keyArray[1][keyArray[0].indexOf(event.key)])) {
             addTile();
+        }
+        if (board.flat().filter((tile) => tile.value == "").length == 0) { //When board is filled
+            checkDeath();
         }
     }
 }
