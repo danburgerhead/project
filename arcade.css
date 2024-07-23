@@ -156,9 +156,3 @@ button:active {
 .control-btn:active {
     background-color: #666;
 }
-
-#game {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
