@@ -59,8 +59,8 @@ function slide(slideDirection) {
         for (let yI of yOrder) {
             for (let xI of xOrder) {
                 if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) { //Checks for edge and avoids error
-                    if (board[yI+dy][xI+dx].value.length < 2 && board[yI][xI].value[0] != "") {
-                        if (board[yI+dy][xI+dx].value[0] == "" || board[yI+dy][xI+dx].value[0] == board[yI][xI].value[0]) {
+                    if (board[yI+dy][xI+dx].value.length < 2 && board[yI][xI].value[0] !== "") {
+                        if (board[yI+dy][xI+dx].value[0] === "" || board[yI+dy][xI+dx].value[0] === board[yI][xI].value[0]) {
                             while (board[yI][xI].value.length > 0) {
                                 board[yI+dy][xI+dx].value.push(board[yI][xI].value.pop())
                                 board[yI+dy][xI+dx].value = board[yI+dy][xI+dx].value.filter(v => v !== "");
