@@ -263,3 +263,13 @@ function keyPress(event) {
     }
 }
 document.addEventListener("keyup",keyPress,false);
+document.getElementById("restart").addEventListener("click",(() => {
+    while (document.getElementById("board").firstChild) {
+        document.getElementById("board").removeChild(document.getElementById("board").lastChild);
+    }
+    board = [];
+    animTiles = [];
+    animSteps = [];
+    mergeSteps = [];
+    initialize();
+}),false);
