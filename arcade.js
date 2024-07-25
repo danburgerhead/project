@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentGame >= games.length) {
             currentGame = 0;
         }
-        document.getElementById("game").remove();
         document.getElementById("GameText").textContent = games[currentGame];
     })
     document.getElementById("leftButton").addEventListener('click', () => {
@@ -34,7 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentGame < 0) {
             currentGame = games.length;
         }
-        document.getElementById("game").remove();
         document.getElementById("GameText").textContent = games[currentGame];
     })
     document.getElementById("joystick").addEventListener('click', () => {
