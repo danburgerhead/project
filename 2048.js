@@ -22,18 +22,21 @@ class AnimTile {
         this.value = value;
         this.htmlElement = htmlElement;
         this.htmlElement.className = "animTile x" + this.value;
+        if (isMerge) {
+            this.htmlElement.className = this.htmlElement.className + " merge";
+        }
         this.htmlElement.textContent = this.value;
         this.htmlElement.style.left = board[this.y][this.x].htmlElement.offsetLeft + "px";
         this.htmlElement.style.top = board[this.y][this.x].htmlElement.offsetTop + "px";
+        this.htmlElement.style.setProperty("transform", "scale("+ 1 + ")");
         this.animationTimer = [];
         this.timesMoved = 0;
         this.tx;
         this.ty;
         this.isMerge = isMerge;
         if (this.isMerge) {
-            if (mergeSteps.includes([this.x,this.y])) {
-                this.htmlElement.style.setProperty("transform", "scale("+ 1.1 + ")");
-            }
+            this.htmlElement.style.setProperty("transform", "scale("+ 1.15 + ")");
+            this.htmlElement.style.setProperty("border","0.75vh solid rgba(187, 173, 160,0.001)");
             this.animMerge();
         }
     }
@@ -51,7 +54,7 @@ class AnimTile {
             this.tx = parseFloat(this.htmlElement.style.left,10);
             this.ty = parseFloat(this.htmlElement.style.top,10);
             //MergeAnimation
-            if (mergeSteps.includes([nx,ny])) {
+            if (mergeSteps.filter(merge => merge[0] == nx && merge[1] == ny).length > 0) {
                 let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
                 document.getElementById("board").appendChild(newMergeTile.htmlElement);
                 animTiles.push(newMergeTile);
@@ -110,14 +113,14 @@ class AnimTile {
             this.htmlElement.remove();
             return;
         }
-        this.htmlElement.style.setProperty("transform", "scale("+ Number(this.htmlElement.style.getPropertyValue("transform").slice(6,-1))-(0.1/10)+")");
+        this.htmlElement.style.setProperty("transform", "scale("+ (Number(this.htmlElement.style.getPropertyValue("transform").slice(6,-1))-(0.15/10)).toString() + ")");
         this.timesMoved++;
     }
     animMerge() {
         if (!this.isMerge) {
             return;
         }
-        if (mergeSteps.includes([this.x,this.y])) {
+        if (mergeSteps.filter(merge => merge[0] == this.x && merge[1] == this.y).length > 0) {
             this.animationTimer = [];
             let interval = setInterval(() => this.animMergeMove(), 1);
             this.animationTimer.push(interval);
@@ -250,11 +253,7 @@ function keyPress(event) {
             tile.htmlElement.className = "tile x";
             tile.htmlElement.textContent = "";
         }
-        console.log(mergeSteps);
         slideAnim();
-        // for (let tile of board.flat()) {
-        //     tile.updateTile();
-        // }
         if (slideLegal) {
             addTile();
         }
