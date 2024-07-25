@@ -16,7 +16,7 @@ class Tile {
 }
 
 class AnimTile {
-    constructor(x, y, value, htmlElement) {
+    constructor(x, y, value, htmlElement, isMerge) {
         this.x = x;
         this.y = y;
         this.value = value;
@@ -29,17 +29,17 @@ class AnimTile {
         this.timesMoved = 0;
         this.tx;
         this.ty;
+        this.isMerge = isMerge;
+        if (this.isMerge) {
+            this.htmlElement.style.width = parseFloat(this.htmlElement.width,10) * 1.2 + "%";
+            this.htmlElement.style.height = parseFloat(this.htmlElement.height,10) * 1.2 + "%";
+            this.animMerge();
+        }
     }
-    animSlideMove(ox,oy,tx,ty) {
-        this.timesMoved++;
-        this.htmlElement.style.left = (parseFloat(this.htmlElement.style.left,10) + (tx-ox)/20) + "px";
-        this.htmlElement.style.top = (parseFloat(this.htmlElement.style.top,10) + (ty-oy)/20) + "px";
-        
-        console.log("left:" + parseInt(this.htmlElement.style.left,10));
-        console.log("top:" + parseInt(this.htmlElement.style.top,10));
-        console.log("Move " + this.timesMoved + ": " + ox + ", " + oy + ", " + tx + ", " + ty);
-        console.log("Increase by " + (tx-ox)/200 + ", " + (ty-oy)/200);
-        console.log(this.timesMoved >= 20);
+    animSlideMove(ox,oy,tx,ty,nx,ny) {
+        if (this.isMerge) {
+            return;
+        }
         if (this.timesMoved >= 20) {
             for (let i of this.animationTimer) {
                 clearInterval(i);
@@ -49,10 +49,32 @@ class AnimTile {
             this.htmlElement.style.top = ty + "px";
             this.tx = parseFloat(this.htmlElement.style.left,10);
             this.ty = parseFloat(this.htmlElement.style.top,10);
+            //MergeAnimation
+
+            let newMergeTile = new AnimTile(this.nx, this.ny, board[ny][nx].value, document.createElement("div"), true);
+            document.getElementById("board").appendChild(newMergeTile.htmlElement);
+            animTiles.push(newMergeTile);
+            
+            animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
             this.htmlElement.remove();
+            return;
         }
+        this.timesMoved++;
+        this.htmlElement.style.left = (parseFloat(this.htmlElement.style.left,10) + (tx-ox)/20) + "px";
+        this.htmlElement.style.top = (parseFloat(this.htmlElement.style.top,10) + (ty-oy)/20) + "px";
+        
+        console.log("Move " + this.timesMoved + ": " + ox + ", " + oy + ", " + tx + ", " + ty);
+        console.log(this.timesMoved >= 20);
     }
     animSlide() {
+        if (this.isMerge) {
+            return;
+        }
+        if (typeof tx !== "undefined") {
+            this.timesMoved = 20;
+            this.htmlElement.style.left = tx + "px";
+            this.htmlElement.style.top = ty + "px";
+        }
         let [ox, oy] = [board[this.y][this.x].htmlElement.offsetLeft,board[this.y][this.x].htmlElement.offsetTop];
         let nx;
         let ny;
@@ -75,10 +97,14 @@ class AnimTile {
             clearInterval(i);
         }
         this.animationTimer = [];
-        let interval = setInterval(() => this.animSlideMove(ox,oy,this.tx,this.ty), 1);
+        let interval = setInterval(() => this.animSlideMove(ox,oy,this.tx,this.ty,nx,ny), 1);
         this.animationTimer.push(interval);
-        // this.htmlElement.style.left = tx + "px";
-        // this.htmlElement.style.top = ty + "px";
+    }
+    animMerge () {
+        if (!this.isMerge) {
+            return;
+        }
+        board[this.y][this.x].updateTile();
     }
 }
 
@@ -177,7 +203,7 @@ function checkDeath() {
 }
 
 function slideAnim() {
-    for(let animTile of animTiles) {
+    for(let animTile of animTiles.filter(tile => !tile.isMerge)) {
         animTile.animSlide();
     }
 }
@@ -186,25 +212,24 @@ function keyPress(event) {
     //Maps input. Right -> [1,0], Left -> [-1,0], Up -> [0,1], Down -> [0,-1]
     let keyArray = [["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"],[[1,0],[-1,0],[0,-1],[0,1]]];
     if (keyArray[0].includes(event.key)) {
-        for (let animTile in animTiles) {
+        for (let animTile of animTiles.filter(tile => !tile.isMerge)) {
             animTile.timesMoved = 20;
         }
         for (let tile of board.flat().filter(t => t.value !== "")) { //Creates AnimTiles
-            let newAnimTile = new AnimTile(tile.x, tile.y, tile.value, document.createElement("div"));
+            let newAnimTile = new AnimTile(tile.x, tile.y, tile.value, document.createElement("div"), false);
             document.getElementById("board").appendChild(newAnimTile.htmlElement);
             animTiles.push(newAnimTile);
         }
         let slideLegal = slide(keyArray[1][keyArray[0].indexOf(event.key)]);
-        console.log("animSteps");
-        console.log(animSteps);
         for (let tile of board.flat()) {
             tile.htmlElement.className = "tile x";
             tile.htmlElement.textContent = "";
         }
         slideAnim();
-        for (let tile of board.flat()) {
-            tile.updateTile();
-        }
+        console.log("AnimTiles: " + animTiles.length);
+        // for (let tile of board.flat()) {
+        //     tile.updateTile();
+        // }
         if (slideLegal) {
             addTile();
         }
