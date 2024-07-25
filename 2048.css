@@ -42,7 +42,6 @@ body {
     align-items:center; 
     position: absolute;
     z-index: 100;
-    transform: scale(1);
 }
 h1 {
     margin:auto; 
