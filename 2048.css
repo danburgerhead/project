@@ -41,6 +41,9 @@ body {
     justify-content:center; 
     align-items:center; 
     position: absolute;
+    z-index: 50;
+}
+.merge {
     z-index: 100;
 }
 h1 {
