@@ -34,7 +34,7 @@ body {
     background-color: #cdc1b5; 
     width: 22.5%;
     height: 22.5%;
-    border:0.75vh solid #bbada0;
+    border:0.75vh solid transparent;
     font-size:6vh; 
     font-weight:bold; 
     display:flex; 
@@ -42,6 +42,7 @@ body {
     align-items:center; 
     position: absolute;
     z-index: 100;
+    transform: scale(1);
 }
 h1 {
     margin:auto; 

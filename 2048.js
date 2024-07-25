@@ -31,11 +31,9 @@ class AnimTile {
         this.ty;
         this.isMerge = isMerge;
         if (this.isMerge) {
-            console.log("yeeeeeeee");
-            console.log(this.htmlElement.style.height);
-            this.htmlElement.width = parseFloat(this.htmlElement.style.width,10) * 1.2 + "%";
-            this.htmlElement.style.height = parseFloat(this.htmlElement.style.height,10) * 1.2 + "%";
-            console.log(this.htmlElement.style.height);
+            if (mergeSteps.includes([this.x,this.y])) {
+                //this.htmlElement.style.setProperty("transform", "scale("+ 1.1 + ")");
+            }
             this.animMerge();
         }
     }
@@ -53,11 +51,12 @@ class AnimTile {
             this.tx = parseFloat(this.htmlElement.style.left,10);
             this.ty = parseFloat(this.htmlElement.style.top,10);
             //MergeAnimation
-
-            let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
-            document.getElementById("board").appendChild(newMergeTile.htmlElement);
-            animTiles.push(newMergeTile);
-            
+            if (mergeSteps.includes([nx,ny])) {
+                // let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
+                // document.getElementById("board").appendChild(newMergeTile.htmlElement);
+                // animTiles.push(newMergeTile);
+            }
+            board[ny][nx].updateTile();
             animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
             this.htmlElement.remove();
             return;
@@ -65,9 +64,6 @@ class AnimTile {
         this.timesMoved++;
         this.htmlElement.style.left = (parseFloat(this.htmlElement.style.left,10) + (tx-ox)/20) + "px";
         this.htmlElement.style.top = (parseFloat(this.htmlElement.style.top,10) + (ty-oy)/20) + "px";
-        
-        console.log("Move " + this.timesMoved + ": " + ox + ", " + oy + ", " + tx + ", " + ty);
-        console.log(this.timesMoved >= 20);
     }
     animSlide() {
         if (this.isMerge) {
@@ -103,11 +99,34 @@ class AnimTile {
         let interval = setInterval(() => this.animSlideMove(ox,oy,this.tx,this.ty,nx,ny), 1);
         this.animationTimer.push(interval);
     }
-    animMerge () {
+    animMergeMove() {
+        if (this.timesMoved >= 10) {
+            for (let i of this.animationTimer) {
+                clearInterval(i);
+            }
+            this.animationTimer = [];
+            //this.htmlElement.style.setProperty("transform", "scale(1)");
+            animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
+            this.htmlElement.remove();
+            return;
+        }
+        //this.htmlElement.style.setProperty("transform", "scale("+ Number(this.htmlElement.style.getPropertyValue("transform").slice(6,-1))-(0.1/10)+")");
+        this.timesMoved++;
+    }
+    animMerge() {
         if (!this.isMerge) {
             return;
         }
-        board[this.y][this.x].updateTile();
+        if (mergeSteps.includes([this.x,this.y])) {
+            this.animationTimer = [];
+            let interval = setInterval(() => this.animMergeMove(), 1);
+            this.animationTimer.push(interval);
+        }
+        else {
+            animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
+            this.timesMoved = 100;
+            this.htmlElement.remove();
+        }
     }
 }
 
@@ -127,6 +146,7 @@ function addTile() {
 let board = [];
 let animTiles = [];
 let animSteps = [];
+let mergeSteps = [];
 function initialize() {
     for(let arrayY of [0,1,2,3]) {
         board.push([]);
@@ -150,6 +170,7 @@ function slide(slideDirection) {
     let legalMove = false;
     board = board.map(row => row.map(tile => {tile.value = [tile.value]; return tile;})); //Turns all values of tile objects into arrays
     animSteps = [];
+    mergeSteps = [];
     for (let i = 0; i < 3; i++) {
         animSteps.push([]);
         for (let yI of yOrder) {
@@ -179,6 +200,7 @@ function slide(slideDirection) {
             if (board[yI][xI].value.length > 1) {
                 document.getElementById("score").textContent = Number(document.getElementById("score").textContent) + Number(board[yI][xI].value[0]) + Number(board[yI][xI].value[1]);
                 board[yI][xI].changeValue([Number(board[yI][xI].value[0]) + Number(board[yI][xI].value[1])]);
+                mergeSteps.push([xI,yI]);
             }
             board[yI][xI].value = board[yI][xI].value[0];
             board[yI][xI].updateTile();
@@ -228,6 +250,7 @@ function keyPress(event) {
             tile.htmlElement.className = "tile x";
             tile.htmlElement.textContent = "";
         }
+        console.log(mergeSteps);
         slideAnim();
         // for (let tile of board.flat()) {
         //     tile.updateTile();
