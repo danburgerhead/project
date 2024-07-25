@@ -31,8 +31,11 @@ class AnimTile {
         this.ty;
         this.isMerge = isMerge;
         if (this.isMerge) {
-            this.htmlElement.style.width = parseFloat(this.htmlElement.width,10) * 1.2 + "%";
-            this.htmlElement.style.height = parseFloat(this.htmlElement.height,10) * 1.2 + "%";
+            console.log("yeeeeeeee");
+            console.log(this.htmlElement.style.height);
+            this.htmlElement.width = parseFloat(this.htmlElement.style.width,10) * 1.2 + "%";
+            this.htmlElement.style.height = parseFloat(this.htmlElement.style.height,10) * 1.2 + "%";
+            console.log(this.htmlElement.style.height);
             this.animMerge();
         }
     }
@@ -51,7 +54,7 @@ class AnimTile {
             this.ty = parseFloat(this.htmlElement.style.top,10);
             //MergeAnimation
 
-            let newMergeTile = new AnimTile(this.nx, this.ny, board[ny][nx].value, document.createElement("div"), true);
+            let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
             document.getElementById("board").appendChild(newMergeTile.htmlElement);
             animTiles.push(newMergeTile);
             
@@ -226,7 +229,6 @@ function keyPress(event) {
             tile.htmlElement.textContent = "";
         }
         slideAnim();
-        console.log("AnimTiles: " + animTiles.length);
         // for (let tile of board.flat()) {
         //     tile.updateTile();
         // }
