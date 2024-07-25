@@ -34,13 +34,16 @@ body {
     background-color: #cdc1b5; 
     width: 22.5%;
     height: 22.5%;
-    border:0.75vh solid transparent;
+    border:0.75vh solid #bbada0;
     font-size:6vh; 
     font-weight:bold; 
     display:flex; 
     justify-content:center; 
     align-items:center; 
     position: absolute;
+    z-index: 50;
+}
+.merge {
     z-index: 100;
 }
 h1 {
