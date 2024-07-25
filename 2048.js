@@ -5,13 +5,13 @@ class Tile {
         this.y = y;
         this.value = value;
         this.htmlElement = htmlElement;
-        this.canMerge = false;
     }
     changeValue(newValue) {
         this.value = newValue;
+    }
+    updateTile() {
         this.htmlElement.className = "tile x" + this.value;
         this.htmlElement.textContent = this.value;
-        this.canMerge = false;
     }
 }
 
@@ -25,6 +25,7 @@ function addTile() {
     }
     //Replaces position with 2 (90% chance) or 4 (10% chance)
     board[randY][randX].changeValue([2,2,2,2,2,2,2,2,2,4][Math.floor(10 * Math.random())]);
+    board[randY][randX].updateTile();
 }
 
 let board = [];
@@ -53,18 +54,20 @@ function slide(slideDirection) {
     let yOrder = [[0,1,2,3],[3,2,1,0]][Number(dy == 1)];
     let legalMove = false;
     runAnimation();
-    for (let tile of board.flat()) { //Resets state of all tiles
-        tile.canMerge = true;
-    }
+    board = board.map(row => row.map(tile => {tile.value = [tile.value]; return tile;})); //Turns all values of tile objects into arrays
     for (let i = 0; i < 3; i++) {
         for (let yI of yOrder) {
             for (let xI of xOrder) {
-                let [xO,yO] = [xI,yI];
-                if (xOrder.includes(xO+dx) && yOrder.includes(yO+dy)) { //Checks for edge and avoids error
-                    if (board[yO][xO].value != "" && board[yO+dy][xO+dx].value == "") {
-                        board[yO+dy][xO+dx].changeValue(board[yO][xO].value);
-                        board[yO][xO].changeValue("");
-                        legalMove = true;
+                if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) { //Checks for edge and avoids error
+                    if (board[yI+dy][xI+dx].value.length < 2 && board[yI][xI].value[0] !== "") {
+                        if (board[yI+dy][xI+dx].value[0] === "" || board[yI+dy][xI+dx].value[0] === board[yI][xI].value[0]) {
+                            while (board[yI][xI].value.length > 0) {
+                                board[yI+dy][xI+dx].value.push(board[yI][xI].value.pop())
+                                board[yI+dy][xI+dx].value = board[yI+dy][xI+dx].value.filter(v => v !== "");
+                            }
+                            board[yI][xI].value.push("");
+                            legalMove = true;
+                        }
                     }
                 }
             }
@@ -72,28 +75,12 @@ function slide(slideDirection) {
     }
     for (let yI of yOrder) {
         for (let xI of xOrder) {
-            if (xOrder.includes(xI+dx) && yOrder.includes(yI+dy)) { //Checks for edge and avoids error
-                if (board[yI+dy][xI+dx].value == board[yI][xI].value && board[yI][xI].value != "") {
-                    document.getElementById("score").textContent = Number(document.getElementById("score").textContent) + board[yI+dy][xI+dx].value + board[yI][xI].value
-                    board[yI+dy][xI+dx].changeValue(board[yI+dy][xI+dx].value + board[yI][xI].value);
-                    board[yI][xI].changeValue("");
-                    legalMove = true;
-                }
+            if (board[yI][xI].value.length > 1) {
+                document.getElementById("score").textContent = Number(document.getElementById("score").textContent) + Number(board[yI][xI].value[0]) + Number(board[yI][xI].value[1]);
+                board[yI][xI].changeValue([Number(board[yI][xI].value[0]) + Number(board[yI][xI].value[1])]);
             }
-        }
-    }
-    for (let i = 0; i < 3; i++) {
-        for (let yI of yOrder) {
-            for (let xI of xOrder) {
-                let [xO,yO] = [xI,yI];
-                if (xOrder.includes(xO+dx) && yOrder.includes(yO+dy)) { //Checks for edge and avoids error
-                    if (board[yO][xO].value != "" && board[yO+dy][xO+dx].value == "") {
-                        board[yO+dy][xO+dx].changeValue(board[yO][xO].value);
-                        board[yO][xO].changeValue("");
-                        legalMove = true;
-                    }
-                }
-            }
+            board[yI][xI].value = board[yI][xI].value[0];
+            board[yI][xI].updateTile();
         }
     }
     return legalMove;
@@ -105,7 +92,6 @@ function checkDeath() {
     for (let tile of board.flat().filter(t => (t.x + t.y) % 2 == 0)) {
         for (let d of [[0,1],[0,-1],[1,0],[-1,0]]) {
             let [dx,dy] = [d[0],d[1]];
-            console.log([tile.x,tile.y,d]);
             if ([0,1,2,3].includes(tile.x+dx) && [0,1,2,3].includes(tile.y+dy)) {
                 if(tile.value == board[tile.y+dy][tile.x+dx].value) {
                     alive = true;

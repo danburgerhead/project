@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.game-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+
+.maze {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+}
+
+.dot {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.scare-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 10;
+}
+
+.scare-popup img {
+    width: 300px;
+    height: auto;
+}
+.wall {
+    background-color: black;
+}
