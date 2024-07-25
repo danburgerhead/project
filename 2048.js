@@ -32,7 +32,7 @@ class AnimTile {
         this.isMerge = isMerge;
         if (this.isMerge) {
             if (mergeSteps.includes([this.x,this.y])) {
-                //this.htmlElement.style.setProperty("transform", "scale("+ 1.1 + ")");
+                this.htmlElement.style.setProperty("transform", "scale("+ 1.1 + ")");
             }
             this.animMerge();
         }
@@ -52,9 +52,9 @@ class AnimTile {
             this.ty = parseFloat(this.htmlElement.style.top,10);
             //MergeAnimation
             if (mergeSteps.includes([nx,ny])) {
-                // let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
-                // document.getElementById("board").appendChild(newMergeTile.htmlElement);
-                // animTiles.push(newMergeTile);
+                let newMergeTile = new AnimTile(nx, ny, board[ny][nx].value, document.createElement("div"), true);
+                document.getElementById("board").appendChild(newMergeTile.htmlElement);
+                animTiles.push(newMergeTile);
             }
             board[ny][nx].updateTile();
             animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
@@ -105,12 +105,12 @@ class AnimTile {
                 clearInterval(i);
             }
             this.animationTimer = [];
-            //this.htmlElement.style.setProperty("transform", "scale(1)");
+            this.htmlElement.style.setProperty("transform", "scale(1)");
             animTiles = animTiles.filter(tile => tile.htmlElement == this.htmlElement);
             this.htmlElement.remove();
             return;
         }
-        //this.htmlElement.style.setProperty("transform", "scale("+ Number(this.htmlElement.style.getPropertyValue("transform").slice(6,-1))-(0.1/10)+")");
+        this.htmlElement.style.setProperty("transform", "scale("+ Number(this.htmlElement.style.getPropertyValue("transform").slice(6,-1))-(0.1/10)+")");
         this.timesMoved++;
     }
     animMerge() {
