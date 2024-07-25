@@ -116,8 +116,8 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-image: url('gif.gif'); 
-    background-repeat:no-repeat; 
+    /* background-image: url('gif.gif'); 
+    background-repeat:no-repeat;  */
     background-size: 110%; 
     z-index:1; 
    
