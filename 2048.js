@@ -25,8 +25,10 @@ class AnimTile {
         this.htmlElement.textContent = this.value;
         this.htmlElement.style.left = board[this.y][this.x].htmlElement.offsetLeft + "px";
         this.htmlElement.style.top = board[this.y][this.x].htmlElement.offsetTop + "px";
-        this.animationTimer;
+        this.animationTimer = [];
         this.timesMoved = 0;
+        this.tx;
+        this.ty;
     }
     animSlideMove(ox,oy,tx,ty) {
         this.timesMoved++;
@@ -37,15 +39,20 @@ class AnimTile {
         console.log("top:" + parseInt(this.htmlElement.style.top,10));
         console.log("Move " + this.timesMoved + ": " + ox + ", " + oy + ", " + tx + ", " + ty);
         console.log("Increase by " + (tx-ox)/200 + ", " + (ty-oy)/200);
+        console.log(this.timesMoved >= 20);
         if (this.timesMoved >= 20) {
-            clearInterval(this.animationTimer);
+            for (let i of this.animationTimer) {
+                clearInterval(i);
+            }
+            this.animationTimer = [];
             this.htmlElement.style.left = tx + "px";
             this.htmlElement.style.top = ty + "px";
+            this.tx = parseFloat(this.htmlElement.style.left,10);
+            this.ty = parseFloat(this.htmlElement.style.top,10);
             this.htmlElement.remove();
         }
     }
     animSlide() {
-        clearInterval(this.animationTimer);
         let [ox, oy] = [board[this.y][this.x].htmlElement.offsetLeft,board[this.y][this.x].htmlElement.offsetTop];
         let nx;
         let ny;
@@ -63,8 +70,13 @@ class AnimTile {
             }
         }
         [nx, ny] = [this.x, this.y];
-        let [tx, ty] = [board[ny][nx].htmlElement.offsetLeft,board[ny][nx].htmlElement.offsetTop];
-        this.animationTimer = setInterval(() => this.animSlideMove(ox,oy,tx,ty), 1);
+        [this.tx, this.ty] = [board[ny][nx].htmlElement.offsetLeft,board[ny][nx].htmlElement.offsetTop];
+        for (let i of this.animationTimer) {
+            clearInterval(i);
+        }
+        this.animationTimer = [];
+        let interval = setInterval(() => this.animSlideMove(ox,oy,this.tx,this.ty), 1);
+        this.animationTimer.push(interval);
         // this.htmlElement.style.left = tx + "px";
         // this.htmlElement.style.top = ty + "px";
     }
