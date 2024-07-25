@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let newGame = document.createElement("iframe");
         newGame.id = "game";
         newGame.style.border = "0px solid";
-        newGame.src = src="2048.html";
+        newGame.src = games[currentGame].toLowerCase() + ".html";
         document.getElementById("arcade-screen").appendChild(newGame);
     });
 
@@ -17,4 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Maybe next time...');
         // You can replace this alert with code to handle the "No" action
     });
+    
+    let games = ["2048","Ball","Snake"]
+    let currentGame = 0;
+    document.getElementById("GameText").textContent = games[currentGame];
+    document.getElementById("rightButton").addEventListener('click', () => {
+        currentGame++;
+        if (currentGame >= games.length) {
+            currentGame = 0;
+        }
+        document.getElementById("GameText").textContent = games[currentGame];
+        console.log("rb")
+    })
+    document.getElementById("leftButton").addEventListener('click', () => {
+        currentGame--;
+        if (currentGame < 0) {
+            currentGame = games.length;
+        }
+        document.getElementById("GameText").textContent = games[currentGame];
+        console.log("lb")
+    })
 });
