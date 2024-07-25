@@ -26,15 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentGame >= games.length) {
             currentGame = 0;
         }
+        document.getElementById("game").remove();
         document.getElementById("GameText").textContent = games[currentGame];
-        console.log("rb")
     })
     document.getElementById("leftButton").addEventListener('click', () => {
         currentGame--;
         if (currentGame < 0) {
             currentGame = games.length;
         }
+        document.getElementById("game").remove();
         document.getElementById("GameText").textContent = games[currentGame];
-        console.log("lb")
+    })
+    document.getElementById("joystick").addEventListener('click', () => {
+        document.getElementById("game").remove();
     })
 });
