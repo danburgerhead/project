@@ -7,6 +7,7 @@ const rows = canvas.height / scale;
 const columns = canvas.width / scale;
 const moveInterval = 100; // Adjust this value for speed
 
+//create the items 
 let snake;
 let fruit;
 let score;
@@ -14,9 +15,11 @@ let lives;
 let gameOver = false;
 let lastMoveTime = 0;
 
+
+//create the snake 
 class Snake {
     constructor() {
-        this.head = { x: 10, y: 10 };
+        this.head = { x: 10, y: 10 }; //coordinates so it moves 
         this.tail = [];
         this.colors = ['green']; // Start with the head color
         this.size = 1;
@@ -35,6 +38,8 @@ class Snake {
             ctx.fillRect(this.tail[i].x * scale, this.tail[i].y * scale, scale, scale);
         }
     }
+
+    //create the function to actively move the snake 
 
     update() {
         this.direction = this.nextDirection;
@@ -58,22 +63,29 @@ class Snake {
         }
     }
 
+    //create the function that adds the color of the fruit to the snake's body
+
     grow(color) {
         this.size++;
         this.colors.push(color); // Add the color of the fruit to the snake's colors
     }
 }
 
+//create the fruit
+
 class Fruit {
     constructor() {
         this.pickLocation();
         this.pickColor();
     }
-
+    
+    //pick a random location to have the fruit placed 
     pickLocation() {
         this.x = Math.floor(Math.random() * columns);
         this.y = Math.floor(Math.random() * rows);
     }
+
+    //pick a random color for the fruit 
 
     pickColor() {
         const colors = ['red', 'blue', 'yellow', 'purple', 'orange'];
@@ -85,7 +97,7 @@ class Fruit {
         ctx.fillRect(this.x * scale, this.y * scale, scale, scale);
     }
 }
-
+//track what key was pressed to change the direction of the snake 
 function changeDirection(event) {
     const { keyCode } = event;
     if (keyCode === 37 && snake.direction !== 'RIGHT') snake.nextDirection = 'LEFT'; // Left arrow
@@ -164,7 +176,7 @@ function checkCollision() {
         }
     }
 }
-
+//create a function that allows the user to keep their length but lose their life
 function loseLife() {
     lives--;
     if (lives > 0) {
@@ -180,7 +192,7 @@ function loseLife() {
 }
 
 function resetGame() {
-    setup(); // Reinitialize the game
+    setup(); // Restart the game
 }
 
 setup();
