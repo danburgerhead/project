@@ -1,12 +1,12 @@
 body {
-    font-family:Arial, Helvetica, sans-serif; 
     text-align:center; 
     background-color: #faf8ef;
+    font-weight: bold;
+    font-family: "Clear Sans", Arial, sans-serif;
 }
 
 
 #board {
-
     width:60vh;
     height:60vh; 
     background-color: #bbada0; 
@@ -116,15 +116,35 @@ h1 {
 }
 
 #restart {
-    width: 100px;
+    /* width: 100px;
     height: 40px;
-display: inline-block;
-background-color:blanchedalmond;
-border-color: #bbada0;
-font: 100;
-font-family: 'Courier New', Courier, monospace;
-position:relative;
-bottom: 10px;
+    display: inline-block;
+    background-color:blanchedalmond;
+    border-color: #bbada0;
+    font: 100;
+    font-family: 'Courier New', Courier, monospace;
+    position:relative;
+    bottom: 10px; */
+    position: relative;
+    bottom: 10px;
+    border: #8f7a66;
+    margin:auto;
+
+    display: inline-block;
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 40px;
+    line-height: 42px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    flex-shrink: 0;
+    font-weight: bold;
+    font-family: "Clear Sans", Arial, sans-serif;
+    font-size: 18px;
 }
 
 /* #score {
