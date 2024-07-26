@@ -150,6 +150,7 @@ let board = [];
 let animTiles = [];
 let animSteps = [];
 let mergeSteps = [];
+document.getElementById("score").textContent = 0;
 function initialize() {
     for(let arrayY of [0,1,2,3]) {
         board.push([]);
@@ -267,6 +268,7 @@ document.getElementById("restart").addEventListener("click",(() => {
     while (document.getElementById("board").firstChild) {
         document.getElementById("board").removeChild(document.getElementById("board").lastChild);
     }
+    document.getElementById("score").textContent = 0;
     board = [];
     animTiles = [];
     animSteps = [];
